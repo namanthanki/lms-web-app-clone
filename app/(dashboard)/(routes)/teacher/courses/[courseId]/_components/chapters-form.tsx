@@ -20,10 +20,10 @@ import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { Course } from "@prisma/client";
+import { Chapter, Course } from "@prisma/client";
 
 interface ChaptersFormProps {
-    initialData: Course;
+    initialData: Course & { chapters: Chapter[] };
     courseId: string;
 }
 
@@ -118,8 +118,11 @@ const ChaptersForm = ({
             }
             {
                 !isCreating && (
-                    <div>
-                        No Chapters
+                    <div className={cn(
+                        "text-sm mt-2",
+                        !initialData.chapters.length && "text-slate-500 italic"
+                    )}>
+                        { !initialData.chapters.length && "No Chapters" }
                     </div>
                 )
             }
